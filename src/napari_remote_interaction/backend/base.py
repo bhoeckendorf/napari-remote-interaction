@@ -130,6 +130,9 @@ class BaseRemoteInteractor(ABC):
             raise retval
         return retval
 
+    def set_key(self, key):
+        self._key = key.encode()
+
     def compare_version(self):
         self(self.__backend__.compare_version(self.get_version()))
 
