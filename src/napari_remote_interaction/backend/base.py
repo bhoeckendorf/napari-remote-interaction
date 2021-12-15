@@ -38,12 +38,14 @@ class BaseNapariBackend(ABC):
         if other == self_version:
             self.update_status(ConnectionStatus.CONNECTED)
             return True
-        error = f"Remote interaction version mismatch\n\nNapari backend {self_version}\nRemote backend {other}\n\n"
+        error = f"Remote interaction version mismatch\n\nNapari backend {self_version}\nRemote interactor {other}\n\n"
         if self_version < other:
-            error += 'Please update the napari backend using the napari menu "Plugins > Install/Uninstall plugins".'
+            # error += 'Please update the napari backend using the napari menu "Plugins > Install/Uninstall plugins".'
+            error += 'Please update the napari backend using "pip install ' \
+                     'git+https://github.com/bhoeckendorf/napari-remote-interaction.git".'
         else:
-            error += 'Please update the remote backend using "pip install -U ' \
-                     'https://github.com/bhoeckendorf/napari-remote-interaction.git[remote]".'
+            error += 'Please update the remote interactor using "pip install ' \
+                     'git+https://github.com/bhoeckendorf/napari-remote-interaction.git".'
         self.update_status(ConnectionStatus.ERROR, error)
         return ValueError(error)
 
