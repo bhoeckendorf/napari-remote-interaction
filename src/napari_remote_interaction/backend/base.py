@@ -82,9 +82,16 @@ class BaseNapariBackend(ABC):
             retval = self._get_viewer_attr(message)
         except Exception as ex:
             retval = ex
-        if retval is not None and not isinstance(retval, (bool, int, float, str, np.ndarray, Exception)):
-            retval = str(type(retval))
-        return retval
+        return self._convert_value(retval)
+
+    def _convert_value(self, x):
+        if isinstance(x, list):
+            return [self._convert_value(i) for i in x]
+        elif isinstance(x, tuple):
+            return tuple(self._convert_value(i) for i in x)
+        if x is None or isinstance(x, (bool, int, float, str, np.ndarray, Exception)):
+            return x
+        return str(type(x))
 
     def deserialize(self, x):
         try:
