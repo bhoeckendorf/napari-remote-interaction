@@ -114,7 +114,9 @@ class BaseRemoteInteractor(ABC):
     def close(self):
         return
 
-    def __init__(self, key: str):
+    def __init__(self, hostname: str, port: int, key: str):
+        self.hostname = hostname
+        self.port = port
         self._key = key.encode()
 
     def __getattr__(self, x):

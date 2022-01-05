@@ -42,8 +42,8 @@ class ZmqNapariBackend(BaseNapariBackend):
 
 class ZmqRemoteInteractor(BaseRemoteInteractor):
 
-    def __init__(self, hostname, port, key: str, bind_socket=True):
-        super().__init__(key)
+    def __init__(self, hostname: str, port: int, key: str, bind_socket: bool = True):
+        super().__init__(hostname, port, key)
         self._context = zmq.Context.instance()
         self._socket = self._context.socket(zmq.REQ)
         if bind_socket:
